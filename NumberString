@@ -1,0 +1,137 @@
+import java.util.ArrayList;
+
+public class NumberString {
+	
+	static public void convertToWords(String s){
+
+		
+		String tenPow[]  = {"","thousand","million","billion","trillion"};
+		
+		int inNum = 0;
+		
+		try{
+			inNum = Integer.parseInt(s);
+		} catch(Exception e){
+			System.out.println("Not an proper number");
+		}
+		
+
+		
+		StringBuilder sb = new StringBuilder();
+		
+		ArrayList<String> list = new ArrayList<>();
+		
+		int pos = 0;
+		
+		int temp = inNum;
+		
+		while(temp != 0){
+			int cur = temp%10;
+			
+			temp = temp/10;
+			boolean stringEnd = temp == 0 ? true : false;
+			pos++;
+
+				sb.append(cur);
+				if(pos == ((pos/3) * 3) || stringEnd){
+					String x = sb.reverse().toString();
+					//System.out.println(getVal(x));
+					list.add(getVal(x));
+					sb = new StringBuilder();
+				}
+
+			}
+		int z = list.size() - 1;
+		
+		for(int i = z ; i >= 0 ;i--){
+			System.out.print(list.get(i) + " " + tenPow[i] + " ");
+		}
+		
+		if(list.size() == 0) {
+			System.out.print("zero");
+		}
+		System.out.println();
+	
+	
+	}
+	
+	static public String getVal(String s){
+		
+		
+		String singleDigit[] = {"","one","two","three","four","five","six","seven","eight",
+				"nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen",
+				"seventeen","eighteen","ninteen","twenty"};
+		
+
+		
+		String tenMul[] = {"", "ten", "twenty", "thirty", "forty", "fifty",
+	            "sixty", "seventy", "eighty", "ninety"};
+		
+		String a = "hundred";
+		
+		int inNum = 0;
+		
+		try{			
+			inNum = Integer.parseInt(s);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		int pos = 0;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		int temp = inNum;
+		
+		while(temp != 0){
+			int cur = temp%10;
+			temp = temp/10;
+			pos++;
+			if(pos == 1){
+				if(cur == 0){
+				}
+				if(temp%10 == 1){
+					int next = temp%10;
+					temp = temp/10;
+					pos++;
+					sb.append(singleDigit[next*10+cur] + " ");
+				} else {
+					sb.append(singleDigit[cur] + " ");
+				}
+			} else if(pos == 2){
+				sb.append(tenMul[cur]+ " ");
+			} else if(pos == 3){
+				sb.append("hundred " + singleDigit[cur]);
+			}
+		}
+		
+		String[] z = sb.toString().split(" ");
+		StringBuilder result = new StringBuilder();
+		
+		for(int i = z.length - 1 ; i >= 0 ;i--){
+			result.append(z[i]+" ");
+		}
+		return result.toString();
+	}
+	
+	public static void main(String args[]){
+		String a = "10000";
+		NumberString.convertToWords("0");
+		NumberString.convertToWords("1");
+		NumberString.convertToWords("2");
+		NumberString.convertToWords("3");
+		NumberString.convertToWords("4");
+		NumberString.convertToWords("90");
+		NumberString.convertToWords("91");
+		NumberString.convertToWords("92");
+		NumberString.convertToWords("100");
+		NumberString.convertToWords("1000");
+		NumberString.convertToWords("105");
+		NumberString.convertToWords("10000");
+		NumberString.convertToWords("100001");
+		NumberString.convertToWords("999999");
+
+		
+		
+	}
+}
